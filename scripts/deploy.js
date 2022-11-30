@@ -1,23 +1,21 @@
-// We require the Hardhat Runtime Environment explicitly here. This is optional
-// but useful for running the script in a standalone fashion through `node <script>`.
-//
-// You can also run a script with `npx hardhat run <script>`. If you do that, Hardhat
-// will compile your contracts, add the Hardhat Runtime Environment's members to the
-// global scope, and execute the script.
-
-const { ethers } = require('hardhat');
-
 async function main() {
-  const MockToken = await ethers.getContractFactory('MockToken');
-  const mtk = await MockToken.deploy('10000000000000000');
+  const [deployer] = await ethers.getSigners();
+  // both token decimal is 0 and initial supply is 100 million
+  const initialSupply = 100000000;
 
-  await mtk.deployed();
+  MyLiquidity = await ethers.getContractFactory('MyLiquidity');
+  Token = await ethers.getContractFactory('MyERC20Token');
+  myLiquidity = await MyLiquidity.deploy();
+  tokenA = await Token.deploy('MyTokenA', 'MTA', initialSupply);
+  tokenB = await Token.deploy('MyTokenB', 'MTB', initialSupply);
 
-  console.log('MockToken deployed to:', mtk.address);
+  console.log('Deploying contracts with the account:', deployer.address);
+  console.log('Account balance:', (await deployer.getBalance()).toString());
+  console.log('liquidity contract address:', myLiquidity.address);
+  console.log('TokenA address:', tokenA.address);
+  console.log('TokenB address:', tokenB.address);
 }
 
-// We recommend this pattern to be able to use async/await everywhere
-// and properly handle errors.
 main()
   .then(() => process.exit(0))
   .catch((error) => {

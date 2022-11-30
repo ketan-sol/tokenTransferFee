@@ -4,7 +4,7 @@ require('dotenv').config();
 
 /** @type import('hardhat/config').HardhatUserConfig */
 const key = process.env.PRIVATE_KEY;
-const api_mumbai = process.env.MUMBAI;
+const api_goerli = process.env.ETH;
 
 module.exports = {
   solidity: {
@@ -29,11 +29,11 @@ module.exports = {
   networks: {
     //testnet configuration
 
-    //POLYGON TESTNET
-    mumbai: {
-      url: api_mumbai,
+    //ETH-GOERLI
+    goerli: {
+      url: api_goerli,
       accounts: [`0x${key}`],
-      chainId: 800001,
+      chainId: 5,
     },
   },
 };
